@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script>
+    // var slide_images = ["http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2014/2/7/1/FNM_030114-Spaghetti-Carbonara-Recipe-h_s4x3.jpg", "http://www.labrasseriefirenze.it/labrasserie/wp-content/uploads/2013/12/spaghetti-carbonara.jpg"];
+var slide_count = 0;
+
+
+$(document).ready(function() {
+
+  setInterval(function() {
+    slide_count = ++slide_count % slide_images.length;
+
+    $('.slide_photo').css('background-image', 'url(\'' + slide_images[slide_count] + '\')');
+  }, 4000);
+
+});
+    </script>
+
+    <style>
+    .slide_photo {
+  position: relative;
+  top: 30px;
+  width: 100%;
+  height: 200px;
+  background-image: url('http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2014/2/7/1/FNM_030114-Spaghetti-Carbonara-Recipe-h_s4x3.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% auto;
+  transition: all .2s ease;
+  -webkit-animation: fade 4s infinite;
+  -moz-animation: fade 4s infinite;
+  -o-animation: fade 4s infinite;
+  animation: fade 4s infinite;
+}
+.slide_photo:hover {
+  background-size: 110% auto;
+}
+@-webkit-keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-o-keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <script  src="/ftp/freekiller201020.pa.infobox.ru/fullpage-js-demo/js/jquery.min.js"></script>
+    <div class="slide_photo"></div>
+  </body>
+</html>
