@@ -87,10 +87,12 @@ if (isset($_POST['formSubmit'])) {
     $clan_selected = $_POST['Clan'];
 }
 
-
+$offset=$_POST['offset'];
+$zone=$_POST['zone'];
 $attacks=array();
-$query = "\nSELECT * FROM {$config["base_database"]}.Attacks_fast ORDER BY resolved asc\n";
-// echo $query;
+if (isset($offset)){
+	$query = "\nSELECT * FROM {$config["base_database"]}.Attacks_fast ORDER BY resolved asc\n";
+}// echo $query;
 $result = $connection->query($query);
 // print_r($result);
 if ($result->num_rows > 0) {
@@ -127,7 +129,8 @@ if ($result->num_rows > 0) {
 	<div class="container-table100">
 		<div class="wrap-table100">
 
-			<form style="display:inline;" action="<?php echo htmlentities($_SERVER['PHP_SELF'])?>" method="post">
+			<form style="display:inline;" action="<?php echo htmlentities($_SERVER['PHP_SELF'])?>" method="post" id="setoffset">
+				<input id="offset" type="hidden" name="offset" value="<?php echo $offset ?>" />
 			<?php
             echo "<p style=\"display:inline; margin-left: 5; font-size: 18px\">Клан: <select style=\"   -webkit-appearance: menulist-button;
 height:1.4em;
@@ -144,6 +147,10 @@ height:1.4em;
             }
 
             echo " </select></p>";
+						?>
+						<p style="display:inline; margin-left: 5; font-size: 18px"> TimeZone: </p>
+						<input style="display:inline; margin-left: 5; font-size: 18px" id="zone" type="text" name="zone" value="<?php echo $zone; ?>" />
+            <?php
             echo "<input style=\"display:inline; font-size: 18px\" type=\"submit\" name=\"formSubmit\" value=\" Обновить \" /></form>
 						<form style=\"display:inline\" action=\"";
                         $url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
@@ -183,7 +190,19 @@ height:1.4em;
 					<table>
 						<tbody>
 <?php
-
+if (!isset($offset)){
+  $a=htmlentities($_SERVER['PHP_SELF']);
+  echo "
+    <script>
+    var offset = new Date().getTimezoneOffset();
+    console.log(offset);
+    document.getElementById(\"offset\").value=offset;
+    console.log(document.getElementById(\"offset\").value);
+		document.getElementById(\"zone\").value=Intl.DateTimeFormat().resolvedOptions().timeZone;
+    document.getElementById(\"setoffset\").submit();
+    </script>
+  ";
+}
 // echo "<table style=\"float: left\">
 // <th align=\"center\"> № </th>
 // <th align=\"center\"> From </th>
@@ -215,8 +234,8 @@ foreach ($attacks as $attack) {
         echo "<td class=\"cell100 column5\"><img src=\"clans/{$img[$attack[3]]}.jpg\"></td>";
         echo "<td class=\"cell100 column6\">{$name2}</td>";
         echo "<td class=\"cell100 column7\">{$attack[1]}</td>";
-        $dt1=CorrectDate($attack[4], 3*60*60);
-        $dt2=CorrectDate($attack[5], 3*60*60);
+        $dt1=CorrectDate($attack[4], $offset*60*(-1));
+        $dt2=CorrectDate($attack[5], $offset*60*(-1));
         // echo "<td class=\"cell100 column6\">{$dt1}</td>";
         echo "<td class=\"cell100 column8\">{$dt2}</td>";
         if ($attack[6]==null) {
@@ -227,7 +246,8 @@ foreach ($attacks as $attack) {
             }
         } else {
             // echo "<td>{$attack[6]}</td>";
-            $dt3=CorrectDate($attack[6], 3*60*60);
+						echo $offset*60*(-1);
+            $dt3=CorrectDate($attack[6], $offset*60*(-1));
             echo "<td class=\"cell100 column9\"><p><a href=\"/fast_data2.php?from={$attack[0]}&to={$attack[1]}&attacker={$attack[2]}&defender={$attack[3]}&declared={$attack[4]}&resolved={$attack[5]}&end={$attack[6]}&clan_selected=$clan_selected\">{$dt3}</a></p></td>";
         }
         echo "</tr>";

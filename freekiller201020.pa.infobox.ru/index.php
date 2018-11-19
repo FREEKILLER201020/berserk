@@ -571,8 +571,9 @@ echo "<th align=\"center\"> Никнейм </th>
 <th align=\"center\"> Клан </th>";
 if ($era_selected!=-1) {
     echo "<th align=\"center\"> Фраги<br>в эре </th>
-<th align=\"center\"> Смерти<br>в эре </th>
-<th align=\"center\"> Содары </th>
+<th align=\"center\"> Смерти<br>в эре </th>";
+// echo "<th align=\"center\"> Содары </th>";
+echo "
 <th align=\"center\"> Участия </th>
 <th align=\"center\"> Очки </th>
 <th align=\"center\"> ЛБЗ </th>";
@@ -775,7 +776,7 @@ foreach ($rowws as $row) {
     if ($era_selected!=-1) {
         echo "<td>$row[6]</td>";
         echo "<td>$row[7]</td>";
-        echo "<td>$row[8]</td>";
+        // echo "<td>$row[8]</td>";
         echo "<td>$row[9]</td>";
         echo "<td>$row[10]</td>";
         echo "<td>$row[11]</td>";
