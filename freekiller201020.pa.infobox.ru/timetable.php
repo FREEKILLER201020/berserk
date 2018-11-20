@@ -3,6 +3,7 @@
 
 		<script src="jquery.js"></script>
 		<script src="jquery-ui.js"></script>
+		<link rel="stylesheet" href="css/style.css">
 		<link href="jquery-ui.css" rel="stylesheet">
 			<meta charset="UTF-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +26,55 @@
 	</head>
 
 	<body>
+		<header class="header sticky sticky--top js-header">
+
+		<div class="grid">
+
+			<nav class="navigation">
+				<ul class="navigation__list navigation__list--inline">
+					<li class="navigation__item"><a onclick="gotourl('index.php')" >Статистика</a></li>
+					<li class="navigation__item"><a onclick="gotourl('timetable.php')" class="is-active" >Расписание</a></li>
+					<li class="navigation__item"><a onclick="gotourl('history.php')">История</a></li>
+					<li class="navigation__item"><a onclick="gotourl('cities.php')">Города</a></li>
+					<li class="navigation__item"><a onclick="gotourl('clans.php')">Кланы</a></li>
+					<span id="dot" style="height: 10px;
+				  width: 10px;
+				  background-color: green;
+				  border-radius: 50%;
+				  display: inline-block;
+					visibility: hidden;"></span>
+				</ul>
+			</nav>
+
+		</div>
+
+	</header>
+	<script  src="js/index.js"></script>
+	<script>
+	<?php
+	$link=htmlentities($_SERVER['PHP_SELF']);
+		$links=explode("/",$link);
+		$res="";
+		for ($i=0;$i<count($links)-1;$i++){
+		$res=$res.$links[$i]."/";
+	}
+	?>
+	var active;
+	document.addEventListener('keydown', function(event) {
+	  if (event.code == 'KeyJ' && (event.ctrlKey || event.metaKey)) {
+			active=true;
+			document.getElementById("dot").style.visibility="visible";
+			console.log(document.getElementById("dot"));
+	  }
+	});
+	function gotourl(url) {
+		if (active==true){
+			window.open("<?php echo $res?>"+url+"?results=true","_self");
+		}
+		else{
+			window.open("<?php echo $res?>"+url,"_self");
+		}
+	} </script>
 <?php
 require("classes.php");
 require("data.php");
