@@ -55,6 +55,8 @@ CheckDatabase($connection, $config);
 CheckTables($connection, $config);
 Scan($connection, $config);
 CloseFights($connection, $config);
+$connection->close();
+
 
 // END!!!!!
 

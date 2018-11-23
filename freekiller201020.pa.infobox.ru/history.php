@@ -65,11 +65,11 @@ a {
 
 			<nav class="navigation">
 				<ul class="navigation__list navigation__list--inline">
-					<li class="navigation__item"><a onclick="gotourl('index.php')" >Статистика</a></li>
-					<li class="navigation__item"><a onclick="gotourl('timetable.php')" >Расписание</a></li>
-					<li class="navigation__item"><a onclick="gotourl('history.php')" class="is-active">История</a></li>
-					<li class="navigation__item"><a onclick="gotourl('cities.php')">Города</a></li>
-					<li class="navigation__item"><a onclick="gotourl('clans.php')">Кланы</a></li>
+					<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('index.php')" >Статистика</a></li>
+					<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('timetable.php','Clan=171')" >Расписание</a></li>
+					<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('history.php','Clan=171')" class="is-active">История</a></li>
+					<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('cities.php','Clan=171')">Города</a></li>
+					<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('clans.php')">Кланы</a></li>
 					<span id="dot" style="height: 10px;
 				  width: 10px;
 				  background-color: green;
@@ -100,12 +100,12 @@ a {
 			console.log(document.getElementById("dot"));
 	  }
 	});
-	function gotourl(url) {
+	function gotourl(url,extras) {
 		if (active==true){
-			window.open("<?php echo $res?>"+url+"?results=true","_self");
+			window.open("<?php echo $res?>"+url+"?results=true&"+extras,"_self");
 		}
 		else{
-			window.open("<?php echo $res?>"+url,"_self");
+			window.open("<?php echo $res?>"+url+"?"+extras,"_self");
 		}
 	} </script>
 <?php
@@ -194,6 +194,7 @@ if ($result->num_rows > 0) {
 $clans=array_unique($clans, SORT_REGULAR);
 // print_r($_POST);
 $clan_selected=-1;
+$clan_selected=$_GET['Clan'];
 if (isset($_POST['formSubmit'])) {
     $clan_selected = $_POST['Clan'];
 }
@@ -408,6 +409,9 @@ foreach ($attacks as $attack) {
         }
     }
 }
+
+$connection->close();
+
 ?>
 </tbody>
 </table>

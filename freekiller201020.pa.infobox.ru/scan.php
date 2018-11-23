@@ -54,6 +54,8 @@ $path_scan="";
 CheckDatabase($connection, $config);
 CheckTables($connection, $config);
 Scan($connection, $config);
+$connection->close();
+
 
 // END!!!!!
 

@@ -49,11 +49,11 @@ font-size: normal;}
 
 		<nav class="navigation">
 			<ul class="navigation__list navigation__list--inline">
-				<li class="navigation__item"><a onclick="gotourl('index.php')">Статистика</a></li>
-				<li class="navigation__item"><a onclick="gotourl('timetable.php')" >Расписание</a></li>
-				<li class="navigation__item"><a onclick="gotourl('history.php')">История</a></li>
-				<li class="navigation__item"><a onclick="gotourl('cities.php')" class="is-active">Города</a></li>
-				<li class="navigation__item"><a onclick="gotourl('clans.php')">Кланы</a></li>
+				<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('index.php')">Статистика</a></li>
+				<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('timetable.php','Clan=171')" >Расписание</a></li>
+				<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('history.php','Clan=171')">История</a></li>
+				<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('cities.php','Clan=171')" class="is-active">Города</a></li>
+				<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('clans.php')">Кланы</a></li>
 				<span id="dot" style="height: 10px;
 			  width: 10px;
 			  background-color: green;
@@ -84,12 +84,12 @@ document.addEventListener('keydown', function(event) {
 		console.log(document.getElementById("dot"));
   }
 });
-function gotourl(url) {
+function gotourl(url,extras) {
 	if (active==true){
-		window.open("<?php echo $res?>"+url+"?results=true","_self");
+		window.open("<?php echo $res?>"+url+"?results=true&"+extras,"_self");
 	}
 	else{
-		window.open("<?php echo $res?>"+url,"_self");
+		window.open("<?php echo $res?>"+url+"?"+extras,"_self");
 	}
 } </script>
 	<?php
@@ -173,6 +173,7 @@ if ($date!=null) {
 $clan_selected=-1;
 $order="frags";
 $order_way="desc";
+$clan_selected=$_GET['Clan'];
 if (isset($_POST['formSubmit'])) {
     $clan_selected = $_POST['Clan'];
     $order = $_POST['Order'];
@@ -353,7 +354,7 @@ foreach ($rowws as $row) {
 }
 echo "</table>";
 
-
+$connection->close();
 
 
 function Connect($config) // Функция подключения к БД

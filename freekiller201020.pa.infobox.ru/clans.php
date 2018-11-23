@@ -49,11 +49,11 @@ font-size: normal;}
 
 		<nav class="navigation">
 			<ul class="navigation__list navigation__list--inline">
-				<li class="navigation__item"><a onclick="gotourl('index.php')">Статистика</a></li>
-				<li class="navigation__item"><a onclick="gotourl('timetable.php')" >Расписание</a></li>
-				<li class="navigation__item"><a onclick="gotourl('history.php')">История</a></li>
-				<li class="navigation__item"><a onclick="gotourl('cities.php')">Города</a></li>
-				<li class="navigation__item"><a onclick="gotourl('clans.php')" class="is-active">Кланы</a></li>
+				<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('index.php')">Статистика</a></li>
+				<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('timetable.php','Clan=171')" >Расписание</a></li>
+				<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('history.php','Clan=171')">История</a></li>
+				<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('cities.php','Clan=171')">Города</a></li>
+				<li class="navigation__item"><a style="cursor: pointer;" onclick="gotourl('clans.php')" class="is-active">Кланы</a></li>
 				<span id="dot" style="height: 10px;
 			  width: 10px;
 			  background-color: green;
@@ -84,12 +84,12 @@ document.addEventListener('keydown', function(event) {
 		console.log(document.getElementById("dot"));
   }
 });
-function gotourl(url) {
+function gotourl(url,extras) {
 	if (active==true){
-		window.open("<?php echo $res?>"+url+"?results=true","_self");
+		window.open("<?php echo $res?>"+url+"?results=true&"+extras,"_self");
 	}
 	else{
-		window.open("<?php echo $res?>"+url,"_self");
+		window.open("<?php echo $res?>"+url+"?"+extras,"_self");
 	}
 } </script>
 	<?php
@@ -125,10 +125,10 @@ function gotourl(url) {
 				<th align=center>  </th>
 				<th align=center> Название </th>
 				<th align=center> Дата регистрации </th>
-				<th align=center> Ссылка на клан </th>
+				<th align=center> Форум клана</th>
 				<?php
 				if (isset($_GET['results'])){
-					echo "<th align=center> Ссылка на разведку </th>";
+					echo "<th align=center> <img style=\"height:15px;width15px;\" src=\"clans/spy.png\"> Разведка </th>";
 				} ?>
 
 				</tr>
@@ -140,14 +140,14 @@ function gotourl(url) {
 						echo "<td>$clan->name</td>";
 						echo "<td>$clan->created</td>";
 						if (isset($clan->link)){
-							echo "<td><a href=\"{$clan->link}\">Ссылка</a></td>";
+							echo "<td><a href=\"{$clan->link}\">$clan->link</a></td>";
 						}
 						else{
 							echo "<td></td>";
 						}
 						if (isset($_GET['results'])){
 							if (isset($clan->spy_link)){
-								echo "<td><a href=\"{$clan->spy_link}\">Ссылка</a></td>";
+								echo "<td><a href=\"{$clan->spy_link}\">$clan->spy_link</a></td>";
 							}
 							else{
 								echo "<td></td>";
@@ -156,6 +156,8 @@ function gotourl(url) {
 						// echo "<td>$clan->spy_link</td>";
 						echo "</tr>";
 				}
+				$connection->close();
+
 				 ?>
 				</table>
 				<?php
