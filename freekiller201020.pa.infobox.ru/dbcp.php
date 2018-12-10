@@ -1,8 +1,8 @@
 <?php
 
-// $file  = file_get_contents(realpath(dirname(__FILE__))."/../config.json");
-// $config = json_decode($file, true);
-// $connection=Connect($config);
+$file  = file_get_contents(realpath(dirname(__FILE__))."/../config.json");
+$config = json_decode($file, true);
+$connection=Connect($config);
 
 $file2  = file_get_contents(realpath(dirname(__FILE__))."/../config_local.json");
 $config2 = json_decode($file2, true);
@@ -14,17 +14,19 @@ $limit=100;
 
 $query="Select count(*) from {$config["base_database"]}.Players";
 echo PHP_EOL.$query.PHP_EOL.PHP_EOL;
-$result = $connection2->query($query);
+$result = $connection->query($query);
 while ($row = $result->fetch_assoc()) {
   $count=$row["count(*)"];
 }
 
 $t0=microtime(true)*10000;
 $cnt=0;
-while($cnt<$count){
+
+while($cnt<$count+$limit){
   $t=(microtime(true)*10000-$t0)/$cnt;
-  progressBar($po++, $count, $t, $t0);
+  progressBar($cnt, $count, $t, $t0);
   $query="Select * from {$config["base_database"]}.Players limit $limit offset $cnt";
+  // echo $query;
   $cnt+=$limit;
   $result = $connection->query($query);
   if ($result->num_rows > 0) {
@@ -39,18 +41,20 @@ while($cnt<$count){
   }
 }
 
+
 $query="Select count(*) from {$config["base_database"]}.Players_fast";
 echo PHP_EOL.$query.PHP_EOL.PHP_EOL;
-$result = $connection2->query($query);
+$result = $connection->query($query);
 while ($row = $result->fetch_assoc()) {
   $count=$row["count(*)"];
 }
 
 $t0=microtime(true)*10000;
 $cnt=0;
-while($cnt<$count){
+while($cnt<$count+$limit){
   $t=(microtime(true)*10000-$t0)/$cnt;
-  progressBar($po++, $count, $t, $t0);
+  progressBar($cnt, $count, $t, $t0);
+  $cnt+=$limit;
   $query="Select * from {$config["base_database"]}.Players_fast limit $limit offset $cnt";
   $result = $connection->query($query);
   if ($result->num_rows > 0) {
@@ -67,16 +71,17 @@ while($cnt<$count){
 
 $query="Select count(*) from {$config["base_database"]}.Attacks";
 echo PHP_EOL.$query.PHP_EOL.PHP_EOL;
-$result = $connection2->query($query);
+$result = $connection->query($query);
 while ($row = $result->fetch_assoc()) {
   $count=$row["count(*)"];
 }
 
 $t0=microtime(true)*10000;
 $cnt=0;
-while($cnt<$count){
+while($cnt<$count+$limit){
   $t=(microtime(true)*10000-$t0)/$cnt;
-  progressBar($po++, $count, $t, $t0);
+  progressBar($cnt, $count, $t, $t0);
+  $cnt+=$limit;
   $query="Select * from {$config["base_database"]}.Attacks limit $limit offset $cnt";
   $result = $connection->query($query);
   if ($result->num_rows > 0) {
@@ -95,16 +100,17 @@ while($cnt<$count){
 
 $query="Select count(*) from {$config["base_database"]}.Attacks_fast";
 echo PHP_EOL.$query.PHP_EOL.PHP_EOL;
-$result = $connection2->query($query);
+$result = $connection->query($query);
 while ($row = $result->fetch_assoc()) {
   $count=$row["count(*)"];
 }
 
 $t0=microtime(true)*10000;
 $cnt=0;
-while($cnt<$count){
+while($cnt<$count+$limit){
   $t=(microtime(true)*10000-$t0)/$cnt;
-  progressBar($po++, $count, $t, $t0);
+  progressBar($cnt, $count, $t, $t0);
+  $cnt+=$limit;
   $query="Select * from {$config["base_database"]}.Attacks_fast limit $limit offset $cnt";
   $result = $connection->query($query);
   if ($result->num_rows > 0) {
@@ -123,15 +129,16 @@ while($cnt<$count){
 
 $query="Select count(*) from {$config["base_database"]}.Clans";
 echo PHP_EOL.$query.PHP_EOL.PHP_EOL;
-$result = $connection2->query($query);
+$result = $connection->query($query);
 while ($row = $result->fetch_assoc()) {
   $count=$row["count(*)"];
 }
 $t0=microtime(true)*10000;
 $cnt=0;
-while($cnt<$count){
+while($cnt<$count+$limit){
   $t=(microtime(true)*10000-$t0)/$cnt;
-  progressBar($po++, $count, $t, $t0);
+  progressBar($cnt, $count, $t, $t0);
+  $cnt+=$limit;
   $query="Select * from {$config["base_database"]}.Clans limit $limit offset $cnt";
   $result = $connection->query($query);
   if ($result->num_rows > 0) {
@@ -150,16 +157,17 @@ while($cnt<$count){
 
 $query="Select count(*) from {$config["base_database"]}.Clans_fast";
 echo PHP_EOL.$query.PHP_EOL.PHP_EOL;
-$result = $connection2->query($query);
+$result = $connection->query($query);
 while ($row = $result->fetch_assoc()) {
   $count=$row["count(*)"];
 }
 
 $t0=microtime(true)*10000;
 $cnt=0;
-while($cnt<$count){
+while($cnt<$count+$limit){
   $t=(microtime(true)*10000-$t0)/$cnt;
-  progressBar($po++, $count, $t, $t0);
+  progressBar($cnt, $count, $t, $t0);
+  $cnt+=$limit;
   $query="Select * from {$config["base_database"]}.Clans_fast limit $limit offset $cnt";
   $result = $connection->query($query);
   if ($result->num_rows > 0) {
@@ -178,16 +186,17 @@ while($cnt<$count){
 
 $query="Select count(*) from {$config["base_database"]}.Cities";
 echo PHP_EOL.$query.PHP_EOL.PHP_EOL;
-$result = $connection2->query($query);
+$result = $connection->query($query);
 while ($row = $result->fetch_assoc()) {
   $count=$row["count(*)"];
 }
 
 $t0=microtime(true)*10000;
 $cnt=0;
-while($cnt<$count){
+while($cnt<$count+$limit){
   $t=(microtime(true)*10000-$t0)/$cnt;
-  progressBar($po++, $count, $t, $t0);
+  progressBar($cnt, $count, $t, $t0);
+  $cnt+=$limit;
   $query="Select * from {$config["base_database"]}.Cities limit $limit offset $cnt";
   $result = $connection->query($query);
   if ($result->num_rows > 0) {
@@ -211,16 +220,17 @@ while($cnt<$count){
 
 $query="Select count(*) from {$config["base_database"]}.Cities_fast";
 echo PHP_EOL.$query.PHP_EOL.PHP_EOL;
-$result = $connection2->query($query);
+$result = $connection->query($query);
 while ($row = $result->fetch_assoc()) {
   $count=$row["count(*)"];
 }
 
 $t0=microtime(true)*10000;
 $cnt=0;
-while($cnt<$count){
+while($cnt<$count+$limit){
   $t=(microtime(true)*10000-$t0)/$cnt;
-  progressBar($po++, $count, $t, $t0);
+  progressBar($cnt, $count, $t, $t0);
+  $cnt+=$limit;
   $query="Select * from {$config["base_database"]}.Cities_fast limit $limit offset $cnt";
   $result = $connection->query($query);
   if ($result->num_rows > 0) {
